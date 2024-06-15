@@ -208,7 +208,7 @@ def process_video(model, img_size, threshold):
                 pub.publish(msg)
                 rospy.loginfo(f"Published center: x={center_x}, y={center_y}")
         else:
-            # Close all windows if no objects are detected
+            # Close all windows if no objects are 
             for window in open_windows:
                 cv2.destroyWindow(window)
             open_windows = set()
