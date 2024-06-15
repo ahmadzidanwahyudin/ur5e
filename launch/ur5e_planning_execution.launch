@@ -1,0 +1,25 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="limited" default="false"/>
+  <arg name="debug" default="true" />
+  
+  <!-- Load the controllers -->
+  <include file="$(find ur5e_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true" />
+  </include>
+
+  <!-- Launch MoveIt -->
+  <include file="$(find ur5e_moveit_config)/launch/move_group.launch"/>
+  <include file="$(find ur5e_moveit_config)/launch/moveit_rviz.launch"/>
+  
+
+  <rosparam file="$(find ur5e_moveit_config)/config/ros_controllers.yaml"/>
+  <param name="use_controller_manager" value="false"/>
+  <param name="trajectory_execution/execution_duration_monitoring" value="false"/>
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
+
+  <!-- Remap follow_joint_trajectory -->
+  <remap if="$(arg sim)" from="/scaled_pos_joint_traj_controller/follow_joint_trajectory" to="/eff_joint_traj_controller/follow_joint_trajectory"/>
+  
+  
+</launch>
